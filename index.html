@@ -73,13 +73,44 @@
 			ul#icons span.ui-icon {float: left; margin: 0 4px;}
 		</style>	
 	</head>
-	<body>
+	<body onload="init()">
 		<div id="tabs">
 			<ul>
 				<li><a href="#dataTabs">Designer Settings</a></li>
 				<li><a href="#printTabs" id="printTab">Print Area</a></li>
 			</ul>
 			<div id="dataTabs">
+				<div id="accordion">
+					<div>
+						<h3><a href="#">Manual Entry</a></h3>
+						<div>
+							<table style="height: 128px" id="manualEntryHeader">
+								<tr>
+									<th class="ui-state-default ui-corner-tl">Barcode Number</th>
+									<th class="ui-state-default">Label text</th>
+									<th class="ui-state-default ui-corner-tr">Repeat</th>
+								</tr>
+								<tr id="manualEntryFooter">
+									<td colspan=3 
+										class="ui-state-default ui-corner-bottom"
+										onmouseover="$(this).removeClass('ui-state-default');
+														$(this).addClass('ui-state-hover');"
+										onmouseleave="$(this).removeClass('ui-state-hover');
+														$(this).addClass('ui-state-default');"
+										onclick="addMoreManualEntryRow();">
+										<span class="ui-icon ui-icon-plusthick" 
+											style="float: left; margin-right: .3em;"></span>Add more
+										<span id="manualEntryRowCount" style="display: none"></span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div>
+						<h3><a href="#">Import Data</a></h3>
+					</div>
+				</div>
+				<br />
 				<button class="ui-state-default ui-corner-all" onclick="button_generate_click()">Generate Barcode</button>
 			</div>
 			<div id="printTabs">
