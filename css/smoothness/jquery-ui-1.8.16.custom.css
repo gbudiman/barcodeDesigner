@@ -567,8 +567,57 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-progressbar { height:2em; text-align: left; }
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
 
+TH {
+	padding: 4px;
+	height: 24px;
+}
+.big-button {
+	font-size: 20pt;
+	padding: 4px;
+}
 .barcodeCell {
 	text-align: center;
 	word-break: normal;
 	width:80px;
+}
+
+.hidden {
+	color:white;
+}
+
+.spreadsheetTable {
+	width: 100%;
+	border: 1px solid #aaaaaa;
+	border-collapse: separate;
+}
+
+.spreadsheetTable TH {
+	background-color: #cccccc;	
+}
+
+@media print {
+	BODY {
+		margin: 0px;
+		padding: 0px;
+	}
+	.hidden {
+		visibility:hidden;
+	}
+	.ui-tabs {
+		margin: 0px;
+		padding: 0px;
+	}
+	.ui-tabs-panel {
+		padding: 0px;
+	}
+	.ui-tabs-nav {
+		display:none;
+	}
+	#tabs {
+		border: 0px;
+	}
+	#printTabs {
+		margin: 0px;
+		padding: 0px;
+	}
 }
