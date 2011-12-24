@@ -60,6 +60,8 @@
 					function() { $(this).removeClass('ui-state-hover'); }
 				);
 				
+				//Zebra row
+				$(".spreadsheetTable tr:even").css("background-color", "#ebe9de");
 			});
 		</script>
 		<style type="text/css">
@@ -80,123 +82,143 @@
 				<li><a href="#printTabs" id="printTab">Print Area</a></li>
 			</ul>
 			<div id="dataTabs">
-				<div id="accordion">
-					<div>
-						<h3><a href="#">Manual Entry</a></h3>
-						<div>
-							<table width=100% style="height: 128px" id="manualEntryHeader">
+				<table>
+					<tr>
+						<td>
+							<div id="accordion">
+								<div>
+									<h3><a href="#">Manual Entry</a></h3>
+									<div>
+										<table width=100% style="height: 128px" id="manualEntryHeader">
+											<tr>
+												<td>
+													<table>
+														<tr>
+															<th class="ui-state-default ui-corner-tl">Barcode Number</th>
+															<th class="ui-state-default">Label text</th>
+															<th class="ui-state-default ui-corner-tr">Repeat</th>
+														</tr>
+														<tr id="manualEntryFooter">
+															<td
+																class="ui-state-default ui-corner-bl"
+																onmouseover="$(this).removeClass('ui-state-default');
+																				$(this).addClass('ui-state-hover');"
+																onmouseleave="$(this).removeClass('ui-state-hover');
+																				$(this).addClass('ui-state-default');"
+																onclick="addMoreManualEntryRow();">
+																<span class="ui-icon ui-icon-plusthick" 
+																	style="float: left; margin-right: .3em;"></span>Add more
+																<span id="manualEntryRowCount" style="display: none"></span>
+															</td>
+															<td colspan=2
+																class="ui-state-default ui-corner-br"
+																onmouseover="$(this).removeClass('ui-state-default');
+																				$(this).addClass('ui-state-hover');"
+																onmouseout="$(this).removeClass('ui-state-hover');
+																				$(this).addClass('ui-state-default');"
+																onclick="button_generate_click('manual');"
+																height=24px>
+																<span class="ui-icon ui-icon-play" 
+																style="float: left; margin-right: .3em;"></span>Generate Barcode
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td style="vertical-align:top">
+													<table>
+														<tr>
+															<td class="ui-state-default ui-corner-left">Cells to skip</td>
+															<td class="ui-state-default ui-corner-right">
+																<input id="skipCells" type="text" value=0 size=1 />
+															</td>
+														</tr>
+														<tr>
+															<td class="ui-state-default ui-corner-left">Replace empty label text with</td>
+															<td class="ui-state-default ui-corner-right">
+																<input id="replaceNull" type="text" value=0 size=12 />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div>
+									<h3><a href="#">Batch Entry</a></h3>
+									<div>
+										<table width=100%>
+											<tr style="vertical-align: top">
+												<td>
+													<textarea rows=24 cols=48 id="batchArea"></textarea>
+												</td>
+												<td>
+													<div class="ui-widget">
+														<div class="ui-state-highlight ui-corner-all" style="margin: 8px; padding: 0 .7em;"> 
+															<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+															<i><b>For best results:</b></i><br />
+															<ul>
+																<li><p>Use spreadsheet to organize the data first. Column headers should <b><i>NOT</i></b> be included. Example:</p>
+																	<table class="spreadsheetTable">
+																		<th>Barcode (include spacing)</th>
+																		<th>Item name (16 characters max)</th>
+																		<th>Repeat amount</th>
+																		<tr>
+																			<td>12 3 4 5678</td>
+																			<td>[Item name #1]</td>
+																			<td>14</td>
+																		</tr>
+																		<tr>
+																			<td></td>
+																			<td></td>
+																			<td>8</td>
+																		</tr>
+																		<tr>
+																			<td>90 1 2 3456</td>
+																			<td>[Item name #2]</td>
+																			<td>20</td>
+																		</tr>
+																	</table> 
+																	<p>To skip barcode cells, simply put blank rows and put the repeat amount as the number of barcode cells to skip (see example above, second row).</p>
+																</li>
+																<li><p></p>Copy data from spreadsheet (<b>exclude</b> the headers) and paste in the box to the left.</p></li>
+																<li>Click 
+																	<button class="ui-state-default ui-corner-all big-button" 
+																		onclick="button_generate_click('batch')"
+																		onmouseover="$(this).removeClass('ui-state-default');
+																				$(this).addClass('ui-state-hover');"
+																		onmouseout="$(this).removeClass('ui-state-hover');
+																				$(this).addClass('ui-state-default');">
+																	<span class="ui-icon ui-icon-play" style="float:left; margin-right: .3em;"> </span>
+																	Generate Barcode</button>
+																</li>
+															</ul>
+															</p>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td style="vertical-align:top">
+							<div class="ui-state-default ui-corner-top divHeader" id="divSettings">Settings</div>
+							<table>
 								<tr>
-									<td>
-										<table>
-											<tr>
-												<th class="ui-state-default ui-corner-tl">Barcode Number</th>
-												<th class="ui-state-default">Label text</th>
-												<th class="ui-state-default ui-corner-tr">Repeat</th>
-											</tr>
-											<tr id="manualEntryFooter">
-												<td
-													class="ui-state-default ui-corner-bl"
-													onmouseover="$(this).removeClass('ui-state-default');
-																	$(this).addClass('ui-state-hover');"
-													onmouseleave="$(this).removeClass('ui-state-hover');
-																	$(this).addClass('ui-state-default');"
-													onclick="addMoreManualEntryRow();">
-													<span class="ui-icon ui-icon-plusthick" 
-														style="float: left; margin-right: .3em;"></span>Add more
-													<span id="manualEntryRowCount" style="display: none"></span>
-												</td>
-												<td colspan=2
-													class="ui-state-default ui-corner-br"
-													onmouseover="$(this).removeClass('ui-state-default');
-																	$(this).addClass('ui-state-hover');"
-													onmouseout="$(this).removeClass('ui-state-hover');
-																	$(this).addClass('ui-state-default');"
-													onclick="button_generate_click('manual');"
-													height=24px>
-													<span class="ui-icon ui-icon-play" 
-													style="float: left; margin-right: .3em;"></span>Generate Barcode
-												</td>
-											</tr>
-										</table>
-									</td>
-									<td style="vertical-align:top">
-										<table>
-											<tr>
-												<td class="ui-state-default ui-corner-left">Cells to skip</td>
-												<td class="ui-state-default ui-corner-right">
-													<input id="skipCells" type="text" value=0 size=1 />
-												</td>
-											</tr>
-											<tr>
-												<td class="ui-state-default ui-corner-left">Replace empty label text with</td>
-												<td class="ui-state-default ui-corner-right">
-													<input id="replaceNull" type="text" value=0 size=12 />
-												</td>
-											</tr>
-										</table>
-									</td>
+									<td class="ui-state-default">Number of rows</td>
+									<td><input type="text" size=2 id="rowSize"/></td>
+								</tr>
+								<tr>
+									<td class="ui-state-default">Number of columns</td>
+									<td><input type="text" size=2 id="colSize"/></td>
 								</tr>
 							</table>
-						</div>
-					</div>
-					<div>
-						<h3><a href="#">Batch Entry</a></h3>
-						<div>
-							<table width=100%>
-								<tr style="vertical-align: top">
-									<td>
-										<textarea rows=24 cols=80></textarea>
-									</td>
-									<td>
-										<div class="ui-widget">
-											<div class="ui-state-highlight ui-corner-all" style="margin: 8px; padding: 0 .7em;"> 
-												<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-												<i><b>For best results:</b></i><br />
-												<ul>
-													<li><p>Use spreadsheet to organize the data first. Column headers should <b><i>NOT</i></b> be included. Example:</p>
-														<table class="spreadsheetTable">
-															<th>Barcode (do include spacing)</th>
-															<th>Item name (less than 15 characters)</th>
-															<th>Repeat amount</th>
-															<tr>
-																<td>12 3 4 5678</td>
-																<td>[Item name #1]</td>
-																<td>14</td>
-															</tr>
-															<tr>
-																<td></td>
-																<td></td>
-																<td>8</td>
-															</tr>
-															<tr>
-																<td>90 1 2 3456</td>
-																<td>[Item name #2]</td>
-																<td>20</td>
-															</tr>
-														</table> 
-														<p>To skip barcode cells, simply put blank rows and put the repeat amount as the number of barcode cells to skip (see example above, second row).</p>
-													</li>
-													<li><p></p>Copy data from spreadsheet (<b>exclude</b> the headers) and paste in the box to the left.</p></li>
-													<li>Click 
-														<button class="ui-state-default ui-corner-all big-button" 
-															onclick="button_generate_click('batch')"
-															onmouseover="$(this).removeClass('ui-state-default');
-																	$(this).addClass('ui-state-hover');"
-															onmouseout="$(this).removeClass('ui-state-hover');
-																	$(this).addClass('ui-state-default');">
-														<span class="ui-icon ui-icon-play" style="float:left; margin-right: .3em;"> </span>
-														Generate Barcode</button>
-													</li>
-												</ul>
-												</p>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</div>
+							<div class="ui-state-default ui-corner-bottom divHeader"></div>
+						</td>
+					</tr>
+				</table>
 				<br />
 			</div>
 			<div id="printTabs">
