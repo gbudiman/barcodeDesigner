@@ -634,7 +634,7 @@ TH {
 		margin: 0px;
 		padding: 0px;
 	}
-	#divSettings {
+	.ui-dialog {
 		visibility: hidden;
 	}
 }
