@@ -53,10 +53,51 @@
 					range: true,
 					values: [17, 67]
 				});
+				$('#rowSlider').slider({
+					min: 1,
+					max: 64,
+					slide: function() {
+						$('#rowSize').val($(this).slider("option", "value"));
+					},
+					stop: function() {
+						document.currentProgress = 0;
+						$('#progressbar').progressbar({value: 0});
+						$('#progressbarWrapper').show();
+						button_generate_click(document.inputMethod);
+					}
+				})
+				$('#colSlider').slider({
+					min: 1,
+					max: 64,
+					slide: function() {
+						$('#colSize').val($(this).slider("option", "value"));
+					},
+					stop: function() {
+						document.currentProgress = 0;
+						$('#progressbar').progressbar({value: 0});
+						$('#progressbarWrapper').show();
+						button_generate_click(document.inputMethod);
+					}
+				})
+				$('#cellSlider').slider({
+					min: 64,
+					max: 256,
+					step: 8,
+					slide: function() {
+						$('#progressbarWrapper').show();
+						$('#cellSize').val($(this).slider("option", "value"));
+					},
+					stop: function() {
+						document.currentProgress = 0;
+						$('#progressbar').progressbar({value: 0});
+						$('#progressbarWrapper').css("display", "inline");
+						button_generate_click(document.inputMethod);
+					}
+				})
 				
 				// Progressbar
 				$("#progressbar").progressbar({
-					value: 20 
+					value: 0 
 				});
 				
 				//hover states on the static widgets
@@ -88,18 +129,25 @@
 			<table>
 				<tr>
 					<td class="ui-state-default">Number of rows</td>
-					<td><input type="text" size=2 id="rowSize"/></td>
+					<td><input type="text" size=2 id="rowSize" onchange="layoutChange()"/></td>
+					<td width=50%><div id="rowSlider"></div></td>
 				</tr>
 				<tr>
 					<td class="ui-state-default">Number of columns</td>
-					<td><input type="text" size=2 id="colSize" /></td>
+					<td><input type="text" size=2 id="colSize" onchange="layoutChange()"/></td>
+					<td><div id="colSlider"></div></td>
 				</tr>
 				<tr>
 					<td class="ui-state-default">Cell width</td>
-					<td><input type="text" size=2 id="cellSize" /></td>
+					<td><input type="text" size=2 id="cellSize" onchange="layoutChange()"/></td>
+					<td><div id="cellSlider"></div></td>
 				</tr>
 			</table>
 			<button id="interactiveButton"></button>
+			<div id="progressbarWrapper">
+				Rendering... <br />
+				<div id="progressbar" style="width: 100%, display: none;"></div>
+			</div>
 		</div>
 		<div id="tabs">
 			<ul>
