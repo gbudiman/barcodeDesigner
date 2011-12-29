@@ -67,6 +67,9 @@
 				
 				//Zebra row
 				$(".spreadsheetTable tr:even").css("background-color", "#ebe9de");
+				
+				//Sortable row
+				$(".sortable").sortable({items: '.rowSortable'});
 			});
 		</script>
 		<style type="text/css">
@@ -124,9 +127,9 @@
 															<ul>
 																<li><p>Use spreadsheet to organize the data first. Column headers should <b><i>NOT</i></b> be included. Example:</p>
 																	<table class="spreadsheetTable">
-																		<th>Barcode (include spacing)</th>
-																		<th>Item name (16 characters max)</th>
-																		<th>Repeat amount</th>
+																		<th>Barcode</th>
+																		<th>Item name</th>
+																		<th>Repeat</th>
 																		<tr>
 																			<td>12 3 4 5678</td>
 																			<td>[Item name #1]</td>
@@ -168,18 +171,22 @@
 								<div>
 									<h3><a href="#">Manual Entry</a></h3>
 									<div>
-										<table width=100% style="height: 128px" id="manualEntryHeader">
+										<table width=100% style="height: 64px" id="manualEntryHeader">
 											<tr>
 												<td>
-													<table>
+													<table class="sortable">
 														<tr>
-															<th class="ui-state-default ui-corner-tl">Barcode Number</th>
+															<th class="ui-state-default ui-corner-tl"></th>
+															<th class="ui-state-default"></th>
+															<th class="ui-state-default">Barcode Number</th>
 															<th class="ui-state-default">Label text</th>
 															<th class="ui-state-default ui-corner-tr">Repeat</th>
 														</tr>
 														<tr id="manualEntryFooter">
+															<td class="ui-state-default ui-corner-bl"></td>
+															<td class="ui-state-default"></td>
 															<td
-																class="ui-state-default ui-corner-bl"
+																class="ui-state-default"
 																onmouseover="$(this).removeClass('ui-state-default');
 																				$(this).addClass('ui-state-hover');"
 																onmouseleave="$(this).removeClass('ui-state-hover');
@@ -187,7 +194,7 @@
 																onclick="addMoreManualEntryRow();">
 																<span class="ui-icon ui-icon-plusthick" 
 																	style="float: left; margin-right: .3em;"></span>Add more
-																<span id="manualEntryRowCount" style="display: none"></span>
+																<!--<span id="manualEntryRowCount" style="display: none"></span>-->
 															</td>
 															<td colspan=2
 																class="ui-state-default ui-corner-br"
